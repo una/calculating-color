@@ -1,0 +1,589 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>reveal.js</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/simple.css">
+  <link rel="stylesheet" href="css/mystyles.css">
+  <link href="https://fonts.googleapis.com/css?family=Finger+Paint|Raleway" rel="stylesheet">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <div class="fixed">@una</div>
+      <section>
+        <h1>Calculating Color: Dynamic Theming With CSS Variables</h1>
+        <h2>Una Kravets | @una</h2>
+      </section>
+      <section>
+        <img src="img/intro.jpg" alt="">
+        <aside class="notes">
+          I'm Una, I work on CSS at Google! It's truly my dream job. I lucked out.
+        </aside>
+      </section>
+      <section>
+        <img style="max-height: 600px; object-fit: contain" src="img/disco.jpg" alt="">
+        <aside class="notes">
+          this is my dog Disco -- we both work at Google
+        </aside>
+      </section>
+      <section> 
+        <h2>What We'll Learn:</h2>
+        <ul>
+          <li class="fragment">Dynamic CSS Variables</li>
+          <li class="fragment">CSS Math Functions</li>
+          <li class="fragment">Color Types</li>
+          <li class="fragment">Color Functions</li>
+        </ul>
+      </section>
+      <section>
+        <h1>Dynamic CSS Variables</h1>
+      </section>
+      <section>
+        <h1><code>currentColor</code></h1>
+      </section>
+      <section>
+        <h2><code>currentColor</code></h2>
+      <div class="section--half colored-bg">
+        <div class="demo">
+          <a class="ex1" href="#">Click Me</a>
+        </div>
+      </div>
+      <div class="section--half">
+      <div contenteditable class="display-code html">
+&lt;a class="ex1" href="#"&gt;Click Me&lt;/a&gt;</div>
+  <style contenteditable class="display-code css">
+.ex1 {
+  color: navy;
+  border: 4px solid currentColor;
+  padding: 0.5em;
+  background: white;
+  transition: color 0.5s;
+}
+
+.ex1:hover,
+.ex1:focus {
+  color: darkturquoise;
+}</style>
+        </div>
+      </section>
+      <section>
+        <h2><code>currentColor</code></h2>
+      <div class="section--half colored-bg">
+        <div class="demo">
+          <div class="ex1a" href="#">
+            <span class="text-parent">
+              <span class="text">Messages</span>
+              </span> 
+            34</div>
+        </div>
+      </div>
+      <div class="section--half">
+      <div contenteditable class="display-code html">&lt;div class="ex1a" href="#"&gt;
+  &lt;span class="text-parent"&gt;
+    &lt;span class="text"&gt;Messages&lt;/span&gt;
+  &lt;/span&gt; 34
+&lt;/div&gt;
+</div>
+  <style contenteditable class="display-code css">.ex1a { color: cornflowerblue; }
+
+.ex1a .text-parent {
+  background-color: currentColor;
+  padding: 0.5rem;
+  margin-right: 1rem;
+}
+
+.ex1a .text-parent .text {
+  color: white;
+}</style>
+        </div>
+      </section>
+      <section>
+        <h2><code>currentColor</code> CSS Variable</h2>
+        <p class="ciu_embed" data-feature="currentcolor" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
+          <picture>
+          <source type="image/webp" srcset="https://caniuse.bitsofco.de/image/currentcolor.webp">
+          <source type="image/png" srcset="https://caniuse.bitsofco.de/image/currentcolor.png">
+          <img src="https://caniuse.bitsofco.de/image/currentcolor.jpg" alt="Data on support for the currentcolor feature across the major browsers from caniuse.com">
+          </picture>
+          </p>
+      </section>
+      <section>
+        <h1><code>--var()</code></h1>
+      </section>
+      <section>
+        <h2><code>--var()</code></h2>
+      <div class="section--half colored-bg">
+        <div class="demo">
+          <a class="ex2" href="#">Click Me</a>
+        </div>
+      </div>
+      <div class="section--half">
+  <style contenteditable class="display-code css">
+:root {
+  --colorPrimary: lavender;
+  --linkBg: var(--colorPrimary);
+}
+
+.ex2 {
+  background-color: var(--linkBg);
+  padding: 0.5em;
+  transition: background-color 0.5s;
+}
+
+.ex2:hover,
+.ex2:focus {
+  --linkBg: wheat;
+}</style>
+        </div>
+      </section>
+      <section>
+        <h2><code>--var()</code> CSS Variable</h2>
+        <p class="ciu_embed" data-feature="css-variables" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
+          <picture>
+          <source type="image/webp" srcset="https://caniuse.bitsofco.de/image/css-variables.webp">
+          <source type="image/png" srcset="https://caniuse.bitsofco.de/image/css-variables.png">
+          <img src="https://caniuse.bitsofco.de/image/css-variables.jpg" alt="Data on support for the css-variables feature across the major browsers from caniuse.com">
+          </picture>
+          </p>
+      </section>
+      <section>
+        <h2>Fallback: PostCSS Polyfill <code>All</code></h2>
+        <a class="fallback-link" href="https://github.com/postcss/postcss-custom-properties#readme">github.com/postcss/postcss-custom-properties</a>
+        <div style="margin-top: 1.5rem" contenteditable class="display-code css full">:root {
+  --color: red;
+}
+
+h1 {
+  color: var(--color);
+}
+
+/* becomes */
+
+h1 {
+  color: red;
+  color: var(--color);
+} </div>
+      </section>
+      <section>
+        <h1><code>@property</code></h1>
+      </section>
+      <section>
+        <iframe width="100%" height="550px"  src="https://ishoudinireadyyet.com" style="border:1px solid lightgray"></iframe>
+      </section>
+      <section>
+        <h2>Without <code>@property</code></h2>
+        <style>
+          .ex3 {
+            padding: 0.5em;
+          }
+        </style>
+      <div class="section--half colored-bg">
+        <div class="demo">
+          <a class="ex3" href="#">Click Me</a>
+        </div>
+      </div>
+      <div class="section--half">
+  <style contenteditable class="display-code css">:root {
+  --gradColorA: violet;
+  --gradColorB: lightblue;
+}
+
+.ex3 {
+  background: linear-gradient(to right, var(--gradColorA), var(--gradColorB));
+  transition: --gradColorA 0.5s, 
+              --gradColorB 0.5s;
+}
+
+.ex3:hover,
+.ex3:focus {
+  --gradColorA: tomato;
+  --gradColorB: pink;
+}</style>
+        </div>
+      </section>
+      <section>
+        <h2><code>@property</code></h2>
+        <style>
+          .ex4 {
+            padding: 0.5em;
+          }
+        </style>
+      <div class="section--half colored-bg">
+        <div class="demo">
+          <a class="ex4" href="#">Click Me</a>
+        </div>
+      </div>
+      <div class="section--half">
+  <style contenteditable class="display-code css">@property --gradColor1 {
+  syntax: '<color>';
+  initial-value: violet;
+  inherits: false;
+}
+
+@property --gradColor2 {
+  syntax: '<color>';
+  initial-value: lightblue;
+  inherits: false;
+}
+
+.ex4 {
+  background: linear-gradient(to right, var(--gradColor1), var(--gradColor2));
+  transition: --gradColor1 0.5s, 
+              --gradColor2 0.5s;
+}
+
+.ex4:hover,
+.ex4:focus {
+  --gradColor1: tomato;
+  --gradColor2: pink;
+}</style>
+        </div>
+      </section>
+      <section>
+        <h2><code>@property</code></h2>
+        <style>
+          .ex5 {
+            padding: 0.5em;
+          }
+        </style>
+      <div class="section--half colored-bg">
+        <div class="demo">
+          <a class="ex5" href="#">Click Me</a>
+        </div>
+      </div>
+      <div class="section--half">
+  <style contenteditable class="display-code css">@property --gradHint {
+  syntax: '<percentage>';
+  initial-value: 30%;
+  inherits: false;
+}
+
+.ex5 {
+  background: linear-gradient(to right, var(--gradColor1), var(--gradHint), var(--gradColor2));
+  transition: --gradHint 0.5s;
+}
+
+.ex5:hover,
+.ex5:focus {
+  --gradHint: 70%;
+}</style>
+        </div>
+      </section>
+      <section>
+        <h2><code>@property</code> CSS Variable</h2>
+        <p class="ciu_embed" data-feature="mdn-css__at-rules__property" data-periods="future_3,future_1,current,past_1,past_2" data-accessible-colours="false">
+      </section>
+      <section>
+        <h2>Fallback: PostCSS Polyfill <br><code>Chromium, Opera, Samsung</code></h2>
+        <a class="fallback-link" href="https://github.com/jonathantneal/postcss-register-property">github.com/jonathantneal/postcss-register-property</a>
+        <div style="margin-top: 1.5rem" contenteditable class="display-code css">@property --highlight-color {
+  inherits: true;
+  initial-value: red;
+  syntax: "<color>";
+}</div>
+<div style="display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    grid-gap: 20px;
+    margin-top: 20px;">
+  <div contenteditable style="height: 230px;" class="display-code json fragment">[
+  {
+    "name": "--highlight-color",
+    "inherits": true,
+    "initialValue": "red",
+    "syntax": "<color>"
+  }
+]</div>
+<div contenteditable style="margin-top: 0; height: 230px;" class="display-code js fragment">import properties from './styles.css.properties.json';
+
+if (window.CSS && CSS.registerProperty) {
+  for (const descriptor of properties) {
+    CSS.registerProperty(descriptor);
+  }
+}</div>
+</div>
+      </section>
+      <section>
+        <h1>Let's focus on <br/><code>--var()</code></h1>
+      </section>
+      <section>
+        <h1>& <br/><code>hsl()</code></h1>
+      </section>
+      <section>
+        <img style="height: 600px;
+    margin-bottom: 3rem;
+    object-fit: contain;" src="img/HSL_color_solid_cube.png" alt="">
+        <small class="caption">source: commons.wikimedia.org</small>
+      </section>
+      <section>
+        <iframe src="https://cdpn.io/una/debug/VJMBbx" frameborder="0" width="100%" height="550px"></iframe>
+      </section>
+      <section>
+        <h1>Break it down</h1></section>
+      <section><div style="width: 200px;
+    height: 100px;
+    display: block;
+    top: 2.5rem;
+    right: 5rem;
+    z-index: 2; color: white; display: grid; place-items: center;
+    position: absolute; background-color: var(--colorBrand)">Brand</div>
+        <style class="css display-code" contenteditable="">
+  :root {
+    --colorBrand: hsl(265, 100%, 47%);
+  } </style>
+  <style class="css fragment display-code" contenteditable="">
+  :root {
+    --colorBrand-h: 265;
+    --colorBrand-s: 100%;
+    --colorBrand-l: 47%;
+  }
+  </style>
+  <style class="css fragment display-code" contenteditable="">
+  :root {
+    --colorBrand: hsl(var(--colorBrand-h), var(--colorBrand-s), var(--colorBrand-l));
+  }
+  </style>
+      </section>
+      <section>
+        <h1><code>lighten()</code></h1>
+      </section>
+      <section>
+  <div style="width: 200px; height: 100px; display: block; top: 2.5rem; right: 5rem; z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand)">Brand</div>
+    <style class="css display-code" contenteditable="">
+  :root {
+    --lightnessTransform: 15%;
+  } </style>
+    <style class="css fragment display-code" contenteditable="">
+  :root {
+    --colorBrand--light-l: calc(var(--colorBrand-l) + var(--lightnessTransform));
+  } 
+    </style>
+    <style class="css fragment display-code" contenteditable="">
+  :root {
+    --colorBrand--light:hsl(var(--colorBrand-h),
+                       var(--colorBrand-s),
+                       var(--colorBrand--light-l));
+  } 
+    </style>
+    <div class="fragment" style="width: 200px; height: 100px; display: block; bottom: 5rem; right: 5rem; z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand--light)">Lighten</div>
+      </section>
+      <section>
+        <h1><code>darken()</code></h1>
+      </section>
+      <section>
+  <div style="width: 200px; height: 100px; display: block; top: 2.5rem; right: 5rem; z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand)">Brand</div>
+    <style class="css display-code" contenteditable="">
+  :root {
+    --darknessTransform: -20%;
+  } </style>
+    <style class="css fragment display-code" contenteditable="">
+  :root {
+    --colorBrand--dark-l: calc(var(--colorBrand-l) + var(--darknessTransform));
+  } 
+    </style>
+    <style class="css fragment display-code" contenteditable="">
+  :root {
+    --colorBrand--dark:hsl(var(--colorBrand-h),
+                       var(--colorBrand-s),
+                       var(--colorBrand--dark-l));
+  } 
+    </style>
+    <div class="fragment" style="width: 200px; height: 100px; display: block; bottom: 5rem; right: 5rem; z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand--dark)">Darken</div>
+      </section>
+      <section>
+        <h1><code>complement()</code></h1>
+      </section>
+      <section>
+        <img style="height: 600px;
+    margin-bottom: 3rem;
+    object-fit: contain;" src="img/complementary.png" alt="">
+      </section>
+      <section>
+    <style class="css display-code" contenteditable="">
+  :root {
+    --colorBrand-complement-h: calc(var(--colorBrand-h) + 180);
+  } </style>
+    <style class="css fragment display-code" contenteditable="">
+  :root {
+    --colorBrand--complement: hsl(var(--colorBrand-complement-h),
+                          var(--colorBrand-s),
+                          var(--colorBrand-l));
+  } 
+    </style>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: calc(5rem + 220px); z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand)">Brand</div>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: 5rem; z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand--complement)">Comp</div>
+      </section>
+      <section>
+        <h1><code>triad()</code></h1>
+      </section>
+      <section>
+        <img style="height: 600px;
+    margin-bottom: 3rem;
+    object-fit: contain;" src="img/triadic.png" alt="">
+      </section>
+      <section>
+    <style class="css display-code" contenteditable="">
+  :root {
+    --colorBrand-triad1: hsl(calc(var(--colorBrand-h) + 120),
+                          var(--colorBrand-s),
+                          var(--colorBrand-l));
+    --colorBrand-triad2: hsl(calc(var(--colorBrand-h) - 120),
+                          var(--colorBrand-s),
+                          var(--colorBrand-l))
+  } 
+    </style>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: calc(5rem + 440px); z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand)">Brand</div>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: calc(5rem + 220px); z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand-triad1)">Triad 1</div>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: 5rem; z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand-triad2)">Triad 2</div>
+      </section>
+      <section>
+        <h1><code>mix()</code></h1>
+      </section>
+      <section>
+    <style class="css display-code" contenteditable="">
+  :root {
+    --color2-h: 150;
+    --color2-s: 80%;
+    --color2-l: 50%;
+    --color2: hsl(var(--color2-h), var(--color2-s), var(--color2-l));
+  } 
+    </style>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: calc(5rem + 440px); z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand)">Brand</div>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: calc(5rem + 220px); z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--color2)">Color 2</div>
+      </section>
+      <section>
+    <style class="css display-code" contenteditable>
+  :root {
+    --avg-brand-2-h: calc((var(--colorBrand-h) + var(--color2-h)) / 2);
+    --avg-brand-2-s: calc((var(--colorBrand-s) + var(--color2-s)) / 2);
+    --avg-brand-2-l: calc((var(--colorBrand-l) + var(--color2-l)) / 2);
+  } 
+    </style>
+    <style class="css display-code" contenteditable>
+  :root {
+    --colorMixed: hsl(var(--avg-brand-2-h), var(--avg-brand-2-s), var(--avg-brand-2-l));
+  }
+    </style>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: calc(5rem + 440px); z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorBrand)">Brand</div>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: calc(5rem + 220px); z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--color2)">Color 2</div>
+    <div class="fragment" style="width: 200px; height: 100px; bottom: -8rem; right: 5rem; z-index: 2; color: white; display: grid; place-items: center; position: absolute; background-color: var(--colorMixed)">Mixed</div>
+      </section>
+      <section>
+        <iframe style="height: 550px; width: 100%" src="https://codepen.io/una/debug/qzKXgr" frameborder="0"></iframe>
+      </section>
+      <section>
+        <h1><code>contrast-color()</code></h1>
+      </section>
+      <section>
+      <style class="css display-code" contenteditable>
+  :root {
+    --contrastThreshold: 60%;
+  }
+      </style>
+      <style class="css display-code" contenteditable>
+  .switch-example {
+    --switch: calc((var(--colorBrand-l) - var(--contrastThreshold)) * -100);
+    color: hsl(0, 0%, var(--switch));
+  }
+      </style>
+      <div class="fragment switch-example" style="width: 200px; height: 100px; bottom: -8rem; right: 5rem; z-index: 2; display: grid; place-items: center; position: absolute; background: var(--colorBrand)">Brand</div>
+      </section>
+      <section>
+        <iframe src="https://cdpn.io/una/debug/VJMBbx" frameborder="0" width="100%" height="550px"></iframe>
+      </section>
+      <section>
+        <h2>Dynamic Color Systems</h2>
+        <h2 class="fragment">Web Components</h2>
+        <h2 class="fragment">Browser Art</h2>
+      </section>
+      <section>
+        <h2>Fallback: PostCSS Polyfill <code>All</code></h2>
+        <a class="fallback-link" href="https://github.com/postcss/postcss-custom-properties#readme">github.com/postcss/postcss-custom-properties</a>
+        <div style="margin-top: 1.5rem" contenteditable class="display-code css full">:root {
+  --color: red;
+}
+
+h1 {
+  color: var(--color);
+}
+
+/* becomes */
+
+h1 {
+  color: red;
+  color: var(--color);
+} </div>
+      </section>
+      <section>
+        <div style="display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 300px;
+    gap: 2rem;
+    margin: 0 auto 3rem;
+    width: 85%;">
+          <div>
+            <img class="end-img" src="img/csspodcast.jpg" alt="">
+            <p class="caption">pod.link/thecsspodcast</p></div>
+          <div>
+            <img class="end-img" src="img/toolsday.jpg" alt="">
+            <p class="caption">spec.fm/podcasts/toolsday</p></div>
+          <div>
+            <img class="end-img" src="img/DIB.jpg" alt="">
+            <p class="caption">Chrome Developers Youtube</p></div>
+        </div>
+        <h1>Thank you!</h1>
+      </section>
+
+      <script src="lib/js/head.min.js"></script>
+      <script src="js/reveal.js"></script>
+
+      <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+          history: true,
+          transition: 'none',
+          dependencies: [{
+              src: 'plugin/markdown/marked.js'
+            },
+            {
+              src: 'plugin/markdown/markdown.js'
+            },
+            {
+              src: 'plugin/notes/notes.js',
+              async: true
+            },
+            {
+              src: 'plugin/highlight/highlight.js',
+              async: true,
+              callback: function () {
+                hljs.initHighlightingOnLoad();
+              }
+            }
+          ]
+        });
+      </script>
+      <script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/public/caniuse-embed.min.js"></script>
+
+</body>
+
+</html>
